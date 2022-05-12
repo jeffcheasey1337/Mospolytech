@@ -36,7 +36,11 @@ int main()
 		{
 			b = x0;
 		}
+		cout << "a= " << a << endl;
+		cout << "b= " << b << endl;
 		x1 = new_x(a, b);
+		
+
 		it++;
 	} while (abs(x1 - x0) > eps);
 	cout << "Корень уравнения: " << x1 << endl;
