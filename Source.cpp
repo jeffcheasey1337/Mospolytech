@@ -8,29 +8,29 @@ int main()
 {
 
 setlocale(LC_ALL, "RUS");
-double a, b, ñ = 0, eps,exp=2.71828;
+double a, b, c = 0, eps,exp=2.71828;
 int it = 0;
-cout << "Ìåòîä äèõîòîìèè äëÿ ôóíêöèè y = x*e^(x)-1" << endl;
+cout << "ÐœÐµÑ‚Ð¾Ð´ Ð´Ð¸Ñ…Ð¾Ñ‚Ð¾Ð¼Ð¸Ð¸ Ð´Ð»Ñ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ y = x*e^(x)-1" << endl;
 cout << endl;
-cout << "Ââåäèò êîíöû îòðåçêà:" << endl;
+cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚ ÐºÐ¾Ð½Ñ†Ñ‹ Ð¾Ñ‚Ñ€ÐµÐ·ÐºÐ°:" << endl;
 cin >> a >> b;
-cout << "Ââåäèòå òî÷íîñòü:" << endl;
+cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‚Ð¾Ñ‡Ð½Ð¾ÑÑ‚ÑŒ:" << endl;
 cin >> eps;
 while (abs(b - a) > eps)
 {
-	ñ = (a + b) / 2;
-	if ((b*pow(exp,b)-1) * (ñ * pow(exp, ñ) - 1) < 0)
+	c = (a + b) / 2;
+	if ((b*pow(exp,b)-1) * (c * pow(exp, c) - 1) < 0)
 	{
-		a = ñ;
+		a = c;
 	}
 	else
 	{
-		b = ñ;
+		b = c;
 	}
 	it++;
 }
-ñ = (a + b) / 2;
-cout << "Êîðåíü óðàâíåíèÿ: " << ñ << endl;
-cout << "Òî÷íîñòü: " << eps << endl;
-cout << "Êîëè÷åñòâî èòåðàöèé: " << it << endl;
+c = (a + b) / 2;
+cout << "ÐšÐ¾Ñ€ÐµÐ½ÑŒ ÑƒÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ñ: " << c << endl;
+cout << "Ð¢Ð¾Ñ‡Ð½Ð¾ÑÑ‚ÑŒ: " << eps << endl;
+cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸Ñ‚ÐµÑ€Ð°Ñ†Ð¸Ð¹: " << it << endl;
 }
