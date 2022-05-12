@@ -4,15 +4,17 @@
 
 using namespace std;
 
-double func(double x,double exp= 2.71828)
+double new_x(double a, double b)
+{
+	return a - (b - a) / (fun(b) - fun(a)) * fun(a);
+}
+
+double fun(double x,double exp= 2.71828)
 {
 	return x*pow(exp,x)-1;
 }
 
-double new_x(double a, double b)
-{
-	return a - (b - a) / (func(b) - func(a)) * func(a);
-}
+
 
 int main()
 {
@@ -28,7 +30,7 @@ int main()
 	do
 	{
 		x0 = new_x(a, b);
-		if (func(b) * func(x0) < 0)
+		if (fun(b) * fun(x0) < 0)
 		{
 			a = x0;
 		}
@@ -44,8 +46,6 @@ int main()
 		it++;
 	} while (abs(x1 - x0) > eps);
 	cout << "Корень уравнения: " << x1 << endl;
-	cout << "Точность: " << eps << endl;
 	cout << "Количество итераций: " << it << endl;
 	
 }
-
