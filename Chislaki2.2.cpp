@@ -4,15 +4,15 @@
 
 using namespace std;
 
-double new_x(double a, double b)
+double fu(double x, double exp = 2.71828)
 {
-	return a - (b - a) / (fun(b) - fun(a)) * fun(a);
+	return x * (pow(exp, x)) - 1;
+}
+double nx(double a, double b)
+{
+	return a - ((b - a) / (fu(b) - fu(a))) * fu(a);
 }
 
-double fun(double x,double exp= 2.71828)
-{
-	return x*pow(exp,x)-1;
-}
 
 
 
@@ -29,23 +29,23 @@ int main()
 	cin >> eps;
 	do
 	{
-		x0 = new_x(a, b);
-		if (fun(b) * fun(x0) < 0)
+		x1 = nx(a, b);
+		if (fu(b) * fu(x0) < 0)
 		{
-			a = x0;
+			a = x1;
 		}
 		else
 		{
-			b = x0;
+			b = x1;
 		}
 		cout << "a= " << a << endl;
 		cout << "b= " << b << endl;
-		x1 = new_x(a, b);
-		
+		x1 = nx(a, b);
+
 
 		it++;
-	} while (abs(x1 - x0) > eps);
+	} while ((fu(x1 - eps) * fu(x1 + eps))>0);
 	cout << "Корень уравнения: " << x1 << endl;
 	cout << "Количество итераций: " << it << endl;
-	
+
 }
