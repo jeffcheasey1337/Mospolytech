@@ -1,0 +1,39 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+double foo(double x)
+{
+double c;
+c = 2.0 * sin(x - 0.6) + x - 1.5;
+return c;
+}
+
+double der(double x)
+{
+double c;
+c = 2.0 * cos(x - 0.6) + 1.0;
+return c;
+}
+
+int main()
+{
+setlocale(LC_ALL, "ru");
+cout « "Метод Ньютона" « endl;
+
+double a = 0.0, b = 1.0, x, x1 = b, i = 0;
+double e = 0.0001;
+
+do
+{
+x = x1 - foo(x1) / der(x1);
+
+x1 = x - foo(x) / der(x);
+
+i++;
+cout « "Итерация:" « i « endl;
+cout « "x = " « x1 « endl;
+} while (foo(x1 - e) * foo(x1 + e) > 0);
+
+cout « "\nРешение уравнения: " « x1 « endl;
+}
