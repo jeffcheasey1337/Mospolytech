@@ -45,6 +45,8 @@ int main()
             {
                 cout << "\nx = " << xk << endl;
                 cout << "\nКоличество итераций: " << count << endl;
+                cout << "\nВторая производная a: " << func2(a) << endl;
+                cout << "\nВторая производная b: " << func2(b) << endl;
                 break;
             }
         }
