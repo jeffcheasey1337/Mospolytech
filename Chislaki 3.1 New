@@ -41,7 +41,7 @@ int main()
             xk = xk1;
             xk1 = xk - func(xk) / func1(xk);
             x1 = func2(xk1);
-            cout << "\nмонотонность= " << x1 << endl;
+            cout << "\nВторая производная x= " << x1 << endl;
             count++;
             if ((func(xk - eps) * func(xk + eps) < 0))
             {
