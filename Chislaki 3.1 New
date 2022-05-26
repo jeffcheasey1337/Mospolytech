@@ -2,15 +2,15 @@
 #include <cmath>
 #include <locale>
 using namespace std;
-double fu(double x, double exp = 2.71828)
+double func(double x, double exp = 2.71828)
 {
     return x * (pow(exp, x)) - 1;
 }
-double fu1(double x, double exp = 2.71828)
+double func1(double x, double exp = 2.71828)
 {
     return pow(exp, x) * (1 + x);
 }
-double fu2(double x, double exp = 2.71828)
+double func2(double x, double exp = 2.71828)
 {
     return pow(exp, x) * (2 + x);
 }
@@ -22,28 +22,29 @@ int main()
     cout << "Начало отрезка: "; cin >> a;
     cout << "Конец отрезка: "; cin >> b;
     cout << "Точность: "; cin >> eps;
-    if (fu(a) * fu(b) < 0) 
+    if (func(a) * func(b) < 0)
     {
-        if (fu(a) * fu2(a) > 0) 
+        if (func(a) * func2(a) > 0)
         {
             xk1 = a;
-            
+
         }
         else
         {
             xk1 = b;
-           
+
         }
-       
-        
+
+
         while (true)
         {
-            xk = xk1;  
-            xk1 = xk - fu(xk) / fu1(xk); 
+            xk = xk1;
+            xk1 = xk - func(xk) / func1(xk);
             count++;
-            if ((fu(xk - eps) * fu(xk + eps) < 0)) 
+            if ((func(xk - eps) * func(xk + eps) < 0))
             {
-                cout << "\nx = " << xk << "\nКоличество итераций: " << count << endl;
+                cout << "\nx = " << xk << endl;
+                cout << "\nКоличество итераций: " << count << endl;
                 break;
             }
         }
@@ -51,6 +52,6 @@ int main()
     }
     else
     {
-        cout << "Корней нет." << endl;
+        cout << "Ошибка" << endl;
     }
 }
