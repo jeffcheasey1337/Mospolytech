@@ -1,0 +1,56 @@
+#include <iostream>
+#include <cmath>
+#include <locale>
+using namespace std;
+double fu(double x, double exp = 2.71828)
+{
+    return x * (pow(exp, x)) - 1;
+}
+double fu1(double x, double exp = 2.71828)
+{
+    return pow(exp, x) * (1 + x);
+}
+double fu2(double x, double exp = 2.71828)
+{
+    return pow(exp, x) * (2 + x);
+}
+int main()
+{
+    setlocale(0, "");
+    double a, b, xk1, xk, eps;
+    int count = 0;
+    cout << "Начало отрезка: "; cin >> a;
+    cout << "Конец отрезка: "; cin >> b;
+    cout << "Точность: "; cin >> eps;
+    if (fu(a) * fu(b) < 0) 
+    {
+        if (fu(a) * fu2(a) > 0) 
+        {
+            xk1 = a;
+            
+        }
+        else
+        {
+            xk1 = b;
+           
+        }
+       
+        
+        while (true)
+        {
+            xk = xk1;  
+            xk1 = xk - fu(xk) / fu1(xk); 
+            count++;
+            if ((fu(xk - eps) * fu(xk + eps) < 0)) 
+            {
+                cout << "\nx = " << xk << "\nКоличество итераций: " << count << endl;
+                break;
+            }
+        }
+        return 0;
+    }
+    else
+    {
+        cout << "Корней нет." << endl;
+    }
+}
