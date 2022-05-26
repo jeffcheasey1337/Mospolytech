@@ -11,12 +11,12 @@ double func(double x, double exp = 2.71828)
 }
 int main() {
     setlocale(0, "");
-    double a, b, eps, x = 0.0;
+    double a, b, eps, x = 0.0, exp = 2.71828;
     int count = 0;
     cout << "Начало отрезка: "; cin >> a;
     cout << "Конец отрезка: "; cin >> b;
     cout << "Точность: "; cin >> eps;
-    if (func(a) * func(b) < 0)
+    if ((abs(1-pow(exp,x))) < 1)
     {
         if (func(a) * Fi(a) > 0) 
         {
@@ -33,7 +33,8 @@ int main() {
             count++;
             if ((func(x - eps) * func(x+ eps) < 0)) 
             {
-                cout << "\nX = " << x << "\nКоличество итераций: " << count << endl;
+                cout << "\nX = " << x << endl;
+                cout << "\nКоличество итераций: " << count << endl;
                 break;
             }
         }
@@ -44,4 +45,3 @@ int main() {
         cout << "Ошибка" << endl;
     }
 }
-
