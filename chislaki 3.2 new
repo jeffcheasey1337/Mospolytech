@@ -16,22 +16,22 @@ int main() {
     cout << "Начало отрезка: "; cin >> a;
     cout << "Конец отрезка: "; cin >> b;
     cout << "Точность: "; cin >> eps;
-    if ((abs(1-pow(exp,x))) < 1)
+    if ((abs(1 - pow(exp, x))) < 1)
     {
-        if (func(a) * Fi(a) > 0) 
+        if (func(a) * Fi(a) > 0)
         {
             x = b;
         }
-        if (func(b) * Fi(b) > 0) 
+        if (func(b) * Fi(b) > 0)
         {
             x = a;
         }
         while (true)
         {
-           
-            x = Fi(x); 
+
+            x = Fi(x);
             count++;
-            if ((func(x - eps) * func(x+ eps) < 0)) 
+            if ((func(x - eps) * func(x + eps) < 0))
             {
                 cout << "\nX = " << x << endl;
                 cout << "\nКоличество итераций: " << count << endl;
