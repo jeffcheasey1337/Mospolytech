@@ -24,15 +24,15 @@ int main()
     cout << "Точность: "; cin >> eps;
     if (func(a) * func(b) < 0)
     {
-        if (func(a) * func2(a) > 0)
+        if (func2(a) > 0)
         {
             xk1 = a;
-
+            
         }
         else
         {
             xk1 = b;
-
+            
         }
 
 
