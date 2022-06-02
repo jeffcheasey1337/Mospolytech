@@ -37,7 +37,7 @@ int main()
 	}
 	else
 	{
-		x1 = b;
+		cout << "Ошибка" << endl;
 	}
 	
 	do
