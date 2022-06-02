@@ -1,47 +1,53 @@
 #include <iostream>
+#include <locale>
 #include <cmath>
+
 using namespace std;
-double Fi(double x, double exp = 2.71828)
+
+double fi(double x, double exp = 2.71828)
 {
-    return 1 / pow(exp, x);
+	return 1 / pow(exp, x);
 }
 double func(double x, double exp = 2.71828)
 {
-    return x * (pow(exp, x)) - 1;
+	return x * (pow(exp, x)) - 1;
 }
-int main() {
-    setlocale(0, "");
-    double a, b, eps, x = 0.0, exp = 2.71828;
-    int count = 0;
-    cout << "Начало отрезка: "; cin >> a;
-    cout << "Конец отрезка: "; cin >> b;
-    cout << "Точность: "; cin >> eps;
-    if ((abs(1 - pow(exp, x))) < 1)
-    {
-        if (func(a) * Fi(a) > 0)
-        {
-            x = b;
-        }
-        if (func(b) * Fi(b) > 0)
-        {
-            x = a;
-        }
-        while (true)
-        {
+double dif_fi(double x, double exp = 2.71828)
+{
+	return 1 - pow(exp, x);
+}
 
-            x = Fi(x);
-            count++;
-            if ((func(x - eps) * func(x + eps) < 0))
-            {
-                cout << "\nX = " << x << endl;
-                cout << "\nКоличество итераций: " << count << endl;
-                break;
-            }
-        }
-        return 0;
-    }
-    else
-    {
-        cout << "Ошибка" << endl;
-    }
+int main()
+{
+	setlocale(LC_ALL, "RUS");
+	double a, b, x1, x2, eps, pust;
+	int iter = 1;
+	cout << "Метод простых итераций для функции y = x*e^(x)-1" << endl;
+	cout << endl;
+	cout << "Начало отрезка:" << endl;
+	cin >> a;
+	cout << "Конец отрезка:" << endl;
+	cin >> b;
+	cout << "Введите точность:" << endl;
+	cin >> eps;
+	cout << endl;
+	if (abs(dif_fi(a)) < 1)
+	{
+		x1 = a;
+	}
+	else
+	{
+		x1 = b;
+	}
+	
+	do
+	{
+		x2 = fi(x1);
+		x1 = x2;
+		
+		iter++;
+	} while ((func(x1 - eps) * func(x1 + eps) > 0));
+	cout << "Корень: " << x1 << endl;
+	cout << "Итерации: " << iter << endl;
+	
 }
