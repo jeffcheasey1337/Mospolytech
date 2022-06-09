@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main()
+{
+	setlocale(0, "");
+
+	const int n = 100;
+	double a = 1, b = 2, c = 1, d = 30, x;
+	int i = 0;
+	double U[n], V[n];
+
+	U[i] = -(c / b);
+	V[i] = d / b;
+
+	i++;
+	for (i; i < n - 1; i++)
+	{
+		U[i] = -(c / (a * U[i - 1] + b));
+
+		V[i] = (d - a * V[i - 1]) / (a * U[i - 1] + b);
+	}
+
+	U[i] = 0;
+	V[i] = (d - a * V[i - 1]) / (a * U[i - 1] + b);
+
+	x = V[i];
+	cout << "X[" << i + 1 << "] = " << x << endl;
+
+	i--;
+	for (i; i >= 0; i--)
+	{
+
+		x = U[i] * x + V[i];
+
+		cout << "X[" << i + 1 << "] = " << x << endl;
+	}
+
+}
