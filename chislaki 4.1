@@ -2,6 +2,17 @@
 #include <cmath>
 using namespace std;
 
+double df1(double x, double y)
+{
+    return -sin(y);
+}
+
+double df2(double x, double y)
+{
+    return sin(x-1);
+}
+
+
 int main() {
     setlocale(LC_ALL, "rus");
     double x, y, x0, y0, eps = 0.0001;
@@ -10,17 +21,23 @@ int main() {
     cout << "Начальное приближение y = "; cin >> y0;
 
     while (true) {
-        count++;
-        x = 3+cos(y0);
-        y = 0.5 - cos(x0 - 1);
+        if (abs(df1(x0, y0)) + abs(df2(x0, y0) < 1))
+        {
+            count++;
+            x = 3 + cos(y0);
+            y = 0.5 - cos(x0 - 1);
 
-        if (abs(x - x0) < eps || abs(y - y0) < eps) {
-            cout << endl << "X = " << x << endl << "Y = " << y << endl;
-            cout << "Количество итераций: " << count;
-            break;
 
+
+            if (abs(x - x0) < eps || abs(y - y0) < eps) {
+                cout << endl << "X = " << x << endl << "Y = " << y << endl;
+                cout << "Количество итераций: " << count;
+                break;
+
+            }
+            x0 = x;
+            y0 = y;
         }
-        x0 = x;
-        y0 = y;
+        
     }
 }
