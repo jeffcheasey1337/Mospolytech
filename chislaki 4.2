@@ -50,7 +50,7 @@ int main() {
 
        
 
-    } while ((abs(x - x0) > eps) and (abs(y - y0) > eps));
+    } while ((abs(x - x0) > eps) || (abs(y - y0) > eps));
 
     cout << endl << "X = " << x << endl << "Y = " << y << endl;
     
