@@ -11,16 +11,16 @@ int main() {
 
     while (true) {
         count++;
-        x = 1-(cos(y0))/2;
+        x = 3+cos(y0);
         y = 0.5 - cos(x0 - 1);
 
         if (abs(x - x0) < eps || abs(y - y0) < eps) {
             cout << endl << "X = " << x << endl << "Y = " << y << endl;
             cout << "Количество итераций: " << count;
             break;
+
         }
         x0 = x;
         y0 = y;
     }
 }
-
