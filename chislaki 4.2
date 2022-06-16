@@ -20,36 +20,39 @@ double f2Y(double y)
 }
 int main() {
     setlocale(LC_ALL, "rus");
-    double x, y, x0, y0, eps, F, Fx, Fy, F2, delY, delX, opredel, F2Y, F2X=1, FY=1, FX;
-    
+    double x, y, x0, y0, eps, F1, Fx, Fy, F2, delY, delX, opredel, F2Y, F2X = 1, FY = 1, FX;
+    int count = 0;
     cout << "Начальное значение x = "; cin >> x;
     cout << "Начальное значение y = "; cin >> y;
     cout << "Начальное приблежение = "; cin >> eps;
 
-    do 
+    do
     {
-       
-        F = f1(x, y);
+        count++;
+        F1 = f1(x, y);
         F2 = f2(x, y);
         FX = f1X(x);
         F2Y = f2Y(y);
         opredel = F2Y * FX - FY * F2X;
         if (opredel == 0) {
-            cout << "Определитель не может быть равен 0!" << endl;
+            cout << "Опредилитель не может быть равен 0!" << endl;
             break;
         }
-        
-        
+        delX = (FY * F2 - F1 * F2Y) / opredel;
+        delY = (F1 * F2X - F2 * FX) / opredel;
         
         x0 = x;
         y0 = y;
+        
+        x = x0 + delX;
+        y = y0 + delY;
 
-        x = x + (FY * F2 - F * F2Y) / opredel;
-        y = y + (F * F2X - F2 * FX) / opredel;
+
        
+
     } while ((abs(x - x0) > eps) and (abs(y - y0) > eps));
-   
+
     cout << endl << "X = " << x << endl << "Y = " << y << endl;
     
-   
+
 }
