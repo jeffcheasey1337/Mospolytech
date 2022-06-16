@@ -4,21 +4,21 @@ using namespace std;
 
 int main() {
     setlocale(LC_ALL, "rus");
-    double x, y, x0, y0, eps=0.0001, F, G, Gx, Gy, d, dx, dy, Fx, Fy; //объявление переменных
+    double x, y, x0, y0, eps = 0.0001, F, G, Gx, Gy, d, dx, dy, Fx, Fy; //объявление переменных
     int count = 0;
     cout << "Начальное значение x = "; cin >> x0;
     cout << "Начальное значение y = "; cin >> y0;
 
     while (true) {
         count++;
-        F = sin(y0 - 1) + x0 - 1.3;
-        G = y0 - sin(x0 + 1) - 0.8;
+        F = cos(x0 - 1.0) + y0 - 0.5;
+        G = x0 - cos(y0) - 3.0;
 
-        Fx = 1;
-        Fy = cos(y0-1);
+        Fx = -sin(x0-1);
+        Fy = 1;
 
-        Gx = -cos(x0 + 1);
-        Gy = 1;
+        Gx = 1;
+        Gy = sin(y0);
 
         d = Gy * Fx - Fy * Gx;
 
