@@ -2,43 +2,54 @@
 #include <cmath>
 using namespace std;
 
+double f1(double x, double y)
+{
+    return cos(x - 1.0) + y - 0.5;
+}
+double f2(double x, double y)
+{
+    return x - cos(y) - 3.0;
+}
+double f1X(double x)
+{
+    return -sin(x - 1);
+}
+double f2Y(double y)
+{
+    return sin(y);
+}
 int main() {
     setlocale(LC_ALL, "rus");
-    double x, y, x0, y0, eps = 0.0001, F, G, Gx, Gy, d, dx, dy, Fx, Fy; 
-    int count = 0;
-    cout << "Начальное значение x = "; cin >> x0;
-    cout << "Начальное значение y = "; cin >> y0;
+    double x, y, x0, y0, eps, F, Fx, Fy, F2, delY, delX, opredel, F2Y, F2X=1, FY=1, FX;
+    
+    cout << "Начальное значение x = "; cin >> x;
+    cout << "Начальное значение y = "; cin >> y;
+    cout << "Начальное приблежение = "; cin >> eps;
 
-    while (true) {
-        count++;
-        F = cos(x0 - 1.0) + y0 - 0.5;
-        G = x0 - cos(y0) - 3.0;
-
-        Fx = -sin(x0-1);
-        Fy = 1;
-
-        Gx = 1;
-        Gy = sin(y0);
-
-        d = Gy * Fx - Fy * Gx;
-
-        if (d == 0) {
+    do 
+    {
+       
+        F = f1(x, y);
+        F2 = f2(x, y);
+        FX = f1X(x);
+        F2Y = f2Y(y);
+        opredel = F2Y * FX - FY * F2X;
+        if (opredel == 0) {
             cout << "Определитель не может быть равен 0!" << endl;
             break;
         }
-        dx = (Fy * G - F * Gy) / d;
-        dy = (F * Gx - G * Fx) / d;
-
-        x = x0 + dx;
-        y = y0 + dy;
-
-        if (abs(x - x0) < eps || abs(y - y0) < eps) {
-            cout << endl << "X = " << x << endl;
-            cout << "Y = " << y << endl;
-            cout << "Количество итераций: " << count;
-            break;
-        }
+        
+        
+        
         x0 = x;
         y0 = y;
-    }
+
+        x = x + (FY * F2 - F * F2Y) / opredel;
+        y = y + (F * F2X - F2 * FX) / opredel;
+       
+    } while ((abs(x - x0) > eps) and (abs(y - y0) > eps));
+   
+    cout << endl << "X = " << x << endl << "Y = " << y << endl;
+    
+   
 }
