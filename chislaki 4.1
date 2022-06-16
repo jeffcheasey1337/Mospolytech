@@ -1,0 +1,26 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "rus");
+    double x, y, x0, y0, eps = 0.0001;
+    int count = 0;
+    cout << "Начальное приближение x = "; cin >> x0;
+    cout << "Начальное приближение y = "; cin >> y0;
+
+    while (true) {
+        count++;
+        x = 1-(cos(y0))/2;
+        y = 0.5 - cos(x0 - 1);
+
+        if (abs(x - x0) < eps || abs(y - y0) < eps) {
+            cout << endl << "X = " << x << endl << "Y = " << y << endl;
+            cout << "Количество итераций: " << count;
+            break;
+        }
+        x0 = x;
+        y0 = y;
+    }
+}
+
