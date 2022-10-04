@@ -1,0 +1,149 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+
+// Дмитриев Илья 211-723
+/*
+	Стек
+	Необходимо разработать программу, реализующую работу со стеком.
+	Программа должна содержать функции:
+		вставки
+		извлечения
+	Необходимо предусмотреть:
+		контроль на переполнение
+		контроль на отсутствие элементов
+		отображение на экране значения извлекаемого элемента
+*/
+
+
+
+// Класс для представления stack
+class Stack
+{
+private:
+	int* arr;
+	int front;
+	int capacity;
+
+public:
+	Stack(int z);         // конструктор
+	~Stack();                       // деструктор
+
+	void push(int);
+	int pop();
+	int peek();
+
+	int size();
+	bool isEmpty();
+	bool isFull();
+};
+// Конструктор для инициализации stack
+Stack::Stack(int z)
+{
+	arr = new int[z];
+	capacity = z;
+	front = -1;
+}
+
+// Деструктор для освобождения памяти, выделенной для stack
+Stack::~Stack() {
+	delete[] arr;
+}
+
+
+// Вспомогательная функция для добавления элемента `x` в stack
+void Stack::push(int x)
+{
+    // Проверка на переполнение 
+	if (front == capacity -1 )
+	{
+		throw "Переполнение\n";
+		
+	}
+	
+	arr[front] = x;
+	front++;
+	
+	
+}
+
+
+// Вспомогательная функция для извлечения верхнего элемента из stack
+int Stack::pop()
+{
+	// проверка на опустошение stack
+	if (front<1)
+	{
+		throw "Стек пуст, удалить ничего нельзя\n";
+		
+	}
+	
+	front--;
+	int f = front;
+
+	return arr[f];
+	
+}
+
+
+
+
+
+int main()
+{
+	char b;
+	int z, x;
+
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+
+	// создаем queue произвольного размера
+	cout << "Введите размер стека: "; cin >> z;
+	Stack s(z);
+
+	do
+	{
+		cout << "Ввод в стек / удаление? (y/n): "; cin >> b;
+
+		if (b == 'y')
+
+		{
+			try
+			{
+				cout << "Значение элемента: "; cin >> x;
+				s.push(x);
+
+			}
+			catch (const char* iskl)
+
+			{
+				cout << iskl << endl;
+			}
+
+		}
+		else
+		{
+			if (b == 'n')
+			{
+				try
+				{
+					cout << "Удаленное значение элемента равно: " << s.pop() << endl;
+				}
+				catch (const char* iskl)
+				{
+					cout << iskl << endl;
+				}
+
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+
+
+	} while (true);
+}
