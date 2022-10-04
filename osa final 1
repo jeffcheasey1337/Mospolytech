@@ -5,15 +5,15 @@ using namespace std;
 
 // Дмитриев Илья 211-723
 /*
-    Очередь.
-    Необходимо разработать программу, реализующую работу с очередью.
-    Программа должна содержать функции:
-        вставки
-        извлечения
-    Необходимо предусмотреть:
-        контроль на переполнение
-        контроль на отсутствие элементов
-        отображение на экране значения извлекаемого элемента
+Очередь.
+Необходимо разработать программу, реализующую работу с очередью.
+Программа должна содержать функции:
+вставки
+извлечения
+Необходимо предусмотреть:
+контроль на переполнение
+контроль на отсутствие элементов
+отображение на экране значения извлекаемого элемента
 */
 
 
@@ -22,66 +22,64 @@ using namespace std;
 class Queue
 {
 private:
-    int* arr;       // массив для хранения элементов queue
-    int capacity;   // максимальная емкость queue
-    int front;      // front указывает на передний элемент в queue (если есть)
-    int rear;       // rear указывает на последний элемент в queue
-    
+	int* arr; // массив для хранения элементов queue
+	int capacity; // максимальная емкость queue
+	int front; // front указывает на передний элемент в queue (если есть)
+	int rear; // rear указывает на последний элемент в queue
+
 
 public:
-    Queue(int z);     // конструктор
-    ~Queue();                   // деструктор
+	Queue(int z); // конструктор
+	~Queue(); // деструктор
 
-    int dequeue();
-    void enqueue(int item);
-   
-    
+	int dequeue();
+	void enqueue(int item);
+
+
 };
 
 // Конструктор для инициализации queue
 Queue::Queue(int z)
 {
-    arr = new int[z];
-    capacity = z;
-    front = 0;
-    rear = 0;
-    
+	arr = new int[z];
+	capacity = z;
+	front = 0;
+	rear = 0;
+
 }
 
 // Деструктор для освобождения памяти, выделенной для queue
 Queue::~Queue() {
-    delete[] arr;
+	delete[] arr;
 }
 
 
 void Queue::enqueue(int item)
 {
-    
-    if (front == (rear + 1) % capacity)
-    {
-        cout << "Переполнение\nПрограмма завершена\n";
-        
-    }
-    
 
-    
+	if (front == (rear + 1) % capacity)
+	{
+		throw "Переполнение\n";
+	}
 
-   rear = (rear + 1) % capacity;
-    arr[rear] = item;
-    
+
+	rear = (rear + 1) % capacity;
+	arr[rear] = item;
+
 }
 
 int Queue::dequeue()
 {
-    if (front == rear)
-    {
-        throw "Очередь пуста\n Программа завершена\n";
-        
-    }
-    int f = front;
-    front = (front + 1) % capacity;
-    
-    return arr[front];
+	if (front == rear)
+	{
+		throw "Очередь пуста\n";
+
+	}
+
+	int f = front;
+	front = (front + 1) % capacity;
+
+	return arr[front];
 }
 
 
@@ -90,55 +88,58 @@ int Queue::dequeue()
 
 int main()
 {
-    char b;
-    int z, x;
+	char b;
+	int z, x;
 
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    // создаем queue произвольного размера
-    cout << "Введите размер очередь: "; cin >> z;
-    Queue q(z);
-
-    do
-    {
-        cout << "Ввод в очередь / показ очереди? (y/n): "; cin >> b;
-
-        if (b == 'y')
-
-        {
-            try
-            {
-                cout << "Значение: "; cin >> x;
-                q.enqueue(x);
-            }
-            catch (const int* iskl)
-
-            {
-                cout << iskl << endl;
-            }
-
-        }
-        else
-        {
-            if (b == 'n')
-            {
-                try
-                {
-                    cout << "Значение равно " << q.dequeue() << endl;
-                }
-                catch (const int* iskl)
-                {
-                    cout << iskl << endl;
-                }
-
-            }
-            else
-            {
-                return 0;
-            }
-        }
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
 
+	// создаем queue произвольного размера
+	cout << "Введите размер очередь: "; cin >> z;
+	Queue q(z);
 
-    } while (true);
+	do
+	{
+		cout << "Ввод в очередь / удаление? (y/n): "; cin >> b;
+
+		if (b == 'y')
+
+		{
+			try
+			{
+				cout << "Значение: "; cin >> x;
+				q.enqueue(x);
+				
+			}
+			catch (const char* iskl)
+
+			{
+				cout << iskl << endl;
+			}
+
+		}
+		else
+		{
+			if (b == 'n')
+			{
+				try
+				{
+					cout << "Удаленное значение равно: " << q.dequeue() << endl;
+				}
+				catch (const char* iskl)
+				{
+					cout << iskl << endl;
+				}
+
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+
+
+	} while (true);
 }
