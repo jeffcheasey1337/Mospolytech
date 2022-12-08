@@ -1,0 +1,97 @@
+#include <iostream>
+
+using namespace std;
+
+// Задача о рюкзаке жадным алгоритмом
+
+class Thing
+{
+public:
+    int weight,
+        price;
+    double unitCost;
+
+    Thing()
+    {
+        weight = price = unitCost = 0;
+    }
+};
+
+int main(int nNumberofArgs, char* pszArgs[])
+{
+    setlocale(LC_ALL, "Russian");
+    int capKnap = 0, amountEl = 0, maxCost = 0, finalWeight = 0;
+    Thing* thArr;
+
+    // Чтобы могли прогонять алгоритм столько, сколько нам нужно
+    while (true)
+    {
+        maxCost = finalWeight = 0;
+        
+        cout << "Емкость рюкзака: "; cin >> capKnap;
+        cout << "Всего предметов: "; cin >> amountEl;
+
+        thArr = new Thing[amountEl];
+
+        cout << "\nВведите " << amountEl << " вес и цену вещей:\n";
+
+        for (int i = 0; i < amountEl; i++)
+        {
+            cout << "\n#" << i + 1 << "\tВес:\t"; cin >> thArr[i].weight;
+            cout << "\tЦена:\t"; cin >> thArr[i].price;
+
+            thArr[i].unitCost = double(thArr[i].price) / double(thArr[i].weight);
+        }
+
+        // Сортировка по убыванию для удельной стоимости
+        for (int i = amountEl - 1; i > 0; i--)
+        {
+            Thing thTemp;
+            for (int j = amountEl - 1; j > amountEl - 1 - i; j--)
+            {
+                if (thArr[j].unitCost > thArr[j - 1].unitCost)
+                {
+                    thTemp = thArr[j];
+                    thArr[j] = thArr[j - 1];
+                    thArr[j - 1] = thTemp;
+                }
+            }
+        }
+
+        // Собираем рюкзак
+        for (int i = 0; i < amountEl; i++)
+        {
+            finalWeight += thArr[i].weight;
+            maxCost += thArr[i].price;
+
+            if (finalWeight > capKnap)
+            {
+                finalWeight -= thArr[i].weight;
+                maxCost -= thArr[i].price;
+
+                maxCost += double(thArr[i].price) / (double(thArr[i].weight) / double(capKnap - finalWeight));
+                finalWeight += capKnap - finalWeight;
+
+                break;
+            }
+        }
+
+        cout << "Максимальная цена = " << maxCost << "\nФинальный вес = " << finalWeight << endl;
+
+        delete[] thArr;
+        thArr = nullptr;
+
+        // Выход из цикла
+        bool isWork = true;
+        cout << "Продолжить 1-Да/0-Нет "; cin >> isWork;
+        if (!isWork)
+        {
+            break;
+        }
+        cout << endl;
+    }
+
+    cin.get();
+    cin.get();
+    return 0;
+}
