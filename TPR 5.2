@@ -1,0 +1,103 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+// Задача о рюкзаке методом ветвей и границ
+
+class Thing
+{
+public:
+    int weight,
+        price;
+
+    Thing()
+    {
+        weight = price = 0;
+    }
+};
+
+int main(int nNumberofArgs, char* pszArgs[])
+{
+    setlocale(LC_ALL, "Russian");
+ 
+    int capKnap = 0, amountEl = 0, maxCost = 0, finalWeight = 0;
+    bool* placed; // Массив помещенных элементов. true - поместили, false - не поместили
+    Thing* thArr;
+
+    while (true)
+    {
+        maxCost = finalWeight = 0;
+        
+        cout << "Емкость рюкзака: "; cin >> capKnap;
+        cout << "Всего предметов: "; cin >> amountEl;
+
+        placed = new bool[amountEl];
+        thArr = new Thing[amountEl];
+
+        cout << "\nВведите " << amountEl << " вес и цену вещей:\n";
+
+        for (int i = 0; i < amountEl; i++)
+        {
+            cout << "\n#" << i + 1 << "\tВес:\t"; cin >> thArr[i].weight;
+            cout << "\tЦена:\t"; cin >> thArr[i].price;
+
+            placed[i] = false;
+        }
+
+        for (int i = 0; i < pow(2, amountEl); i++)
+        {
+            int tempWeight = 0, tempCost = 0; // Для поиска максимальной стоимости
+            int indForPlaced = amountEl - 1; // Для заполнения массива placed
+
+            // Перевод десятичного числа в двоичное и поиск максимальной стоимости груза при ограничении по весу
+            int tempValue = i;
+            while (tempValue)
+            {
+                placed[indForPlaced] = bool(tempValue % 2);
+                tempValue /= 2;
+
+                if (placed[indForPlaced])
+                {
+                    tempWeight += thArr[indForPlaced].weight;
+                    tempCost += thArr[indForPlaced].price;
+
+                    if (tempWeight >= capKnap)
+                    {
+                        break;
+                    }
+                }
+
+                indForPlaced--;
+            }
+
+            if (tempWeight <= capKnap && tempCost > maxCost)
+            {
+                maxCost = tempCost;
+                finalWeight = tempWeight;
+            }
+        }
+
+        cout << "Максимальная цена = " << maxCost << "\nФинальный вес = " << finalWeight << endl;
+
+        delete[] placed;
+        placed = nullptr;
+        delete[] thArr;
+        thArr = nullptr;
+
+        // Выход из цикла
+        bool isWork = true;
+        cout << "Продолжить 1-Да/0-Нет "; cin >> isWork;
+        if (!isWork)
+        {
+            break;
+        }
+        cout << endl;
+    }
+
+    
+    cin.get();
+    cin.get();
+    return 0;
+}
