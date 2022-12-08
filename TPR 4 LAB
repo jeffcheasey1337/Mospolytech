@@ -1,0 +1,183 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <iomanip>
+
+using namespace std;
+
+class FWA
+{
+private:
+    const int infinity = 999; 
+    int KolVer; 
+    int** graphMatrix; 
+
+public:
+    FWA(const string& fileName)
+    {
+        KolVer = 1;
+
+        // Получение файлового потока
+        ifstream& fileGraph = *(new ifstream(fileName.c_str()));
+        if (!fileGraph.good())
+        {
+            delete& fileGraph;
+            throw string("Failed to open file");
+        }
+
+        fileGraph.seekg(0); // Позиционируем указатель чтения
+
+        // Находим размер матрицы
+        string tempBuf = "";
+        getline(fileGraph, tempBuf);
+        for (int i = 0; i < tempBuf.length(); i++)
+        {
+            if (tempBuf[i] == ' ')
+            {
+                KolVer++;
+            }
+        }
+
+        fileGraph.seekg(0); // Возвращаем обратно указатель чтения
+
+        graphMatrix = new int* [KolVer]; // numVer строк в матрице
+        for (int i = 0; i < KolVer; i++)
+        {
+            graphMatrix[i] = new int[KolVer]; // и numVer столбцов
+        }
+
+        // Остановка по исчерпанию данных
+        while (!fileGraph.eof())
+        {
+            // Заполнение матрицы
+            for (int i = 0; i < KolVer; i++)
+            {
+                for (int j = 0; j < KolVer; j++)
+                {
+                    fileGraph >> graphMatrix[i][j];
+
+                    // Остановка при сбое (вероятно, из-за того, что достигнут конец данных или произошла
+                    // ошибка при чтении
+                    if (fileGraph.fail())
+                    {
+                        break;
+                        throw string("File read error");
+                    }
+
+                    if (i == j) // Значения на главной диагонали должны быть равны 0
+                    {
+                        graphMatrix[i][j] = 0;
+                        continue;
+                    }
+
+                    if (graphMatrix[i][j] == 0) // Значит, нет прямого пути из i в j
+                    {
+                        graphMatrix[i][j] = infinity;
+                    }
+                }
+            }
+        }
+
+        fileGraph.close();
+    }
+
+   
+    
+    
+    ~FWA()
+    {
+        for (int i = 0; i < KolVer; i++)
+        {
+            delete[] graphMatrix[i];
+        }
+        graphMatrix = nullptr;
+        KolVer = 0;
+    }
+
+    void VyvodGrafa()
+    {
+        for (int i = 0; i < KolVer; i++)
+        {
+            for (int j = 0; j < KolVer; j++)
+            {
+                if (graphMatrix[i][j] == infinity)
+                {
+                    cout << left << setw(4) << "INF" << ' ';
+                }
+                else
+                {
+                    cout << left << setw(4) << graphMatrix[i][j] << ' ';
+                }
+            }
+
+            cout << endl;
+        }
+    }
+    void PoiskKrPuti()
+    {
+        for (int k = 0; k < KolVer; k++)
+        {
+            for (int i = 0; i < KolVer; i++)
+            {
+                for (int j = 0; j < KolVer; j++)
+                {
+                    if (i == k || j == k || i == j) // Строку+столбец k фиксируем и не трогаем, а ГД просто не трогаем
+                    {
+                        continue;
+                    }
+
+                    if (graphMatrix[i][j] > graphMatrix[i][k] + graphMatrix[k][j])
+                    {
+                        graphMatrix[i][j] = graphMatrix[i][k] + graphMatrix[k][j];
+                    }
+                }
+            }
+        }
+    }
+   
+};
+
+int main()
+{
+    try
+    {
+        while (true)
+        {
+            setlocale(LC_ALL, "Russian");
+            string fileOrigGraph;
+            bool isWork = true;
+
+            cout << "Введите имя файла из которого считывать матрицу: "; getline(cin, fileOrigGraph);
+
+            FWA* fwaGraph = new FWA(fileOrigGraph);
+            
+            cout << "\n  Type of matrix for work:\n";
+            fwaGraph->VyvodGrafa();
+            fwaGraph->PoiskKrPuti();
+            cout << "\n  Матрица кратчайших путей в заданном графе:\n";
+            fwaGraph->VyvodGrafa();
+
+            
+
+            delete fwaGraph;
+            fwaGraph = nullptr;
+
+            cout << "Продолжить 1-Да/0-Нет "; cin >> isWork;
+            cin.get(); 
+
+            if (!isWork)
+            {
+                break;
+            }
+        }
+    }
+    catch (const string error)
+    {
+        cout << "Ошибка: " << error << endl;
+    }
+
+    
+    
+    cin.get();
+    return 0;
+}
