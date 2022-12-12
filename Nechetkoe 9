@@ -1,0 +1,172 @@
+#define _USE_MATH_DEFINES
+#include <iostream>
+#include <math.h>
+#include <Windows.h>
+using namespace std;
+
+double T = 0, B = 10;
+int n;
+
+
+double Function(int x) {
+	if (x >= 0 && x <= 1)
+		return x * x;
+	if (x > 1 && x <= 6)
+		return 1;
+	if (x > 6 && x <= 10)
+		return 2.5 - (0.25 * x);
+	if (x < 0 && x>10)
+		return 0;
+
+}
+
+double FunctionX(int x, int T) {
+	return x * Function(x);
+}
+
+
+
+
+double FunctionMed(int x) {
+	if (x >= 0 && x <= 1)
+		return x * x;
+	if (x > 1 && x <= 6)
+		return 1;
+	if (x > 6 && x <= B)
+		return 2, 5 - (0, 25 * x);
+	if (x < 0 && x>10)
+		return 0;
+
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	setlocale(0, "");
+	int metod;
+
+
+	cout << "Выберите методы вычисления интеграла: " << "\n" <<
+		"1. Методом центра тяжести." << "\n" <<
+		"2. Медианным метолом." << "\n" <<
+		"3. Высотным методом." << "\n";
+	cin >> metod;
+
+	switch (metod)
+	{
+	case 1:
+	{
+		int n;
+		double h;
+		double S1 = 0, S2 = 0, y;
+		cout << "Введите колличество шагов: "; cin >> n;
+		
+
+		h = abs((T - B)) / n;
+
+
+
+		for (int i = 0; i < n; i++)
+		{
+
+
+			S1 += (FunctionX(T, T) + FunctionX(T + h, T)) * h * 0.5;
+			S2 += (Function(T) + Function(T + h)) * h * 0.5;
+
+
+			T = T + h;
+		}
+
+
+
+		y = S1 / S2;
+		cout << "Значаение полученное Методом центра тяжести: " << y << endl;
+
+		break;
+	}
+
+	case 2:
+	{
+
+		int n;
+		double S1 = 0, S2 = 4;
+		double h;
+		cout << "Введите колличество шагов: "; cin >> n;
+		h = abs((T - B)) / n;
+		
+		for (int i = 0; i < n; i++)
+		{
+			
+				S2 += (Function(T) + Function(T + h)) * h * 0.5;
+			
+		}
+
+		
+
+		while (S1 <= S2)
+		{
+
+			
+				S1 += (Function(T) + Function(T + h)) * h * 0.5;
+			
+
+			T += h;
+		}
+
+		
+		
+		cout << "\nРезультат дефаззификации медианным методом: " << T << endl;
+
+
+		break;
+
+
+	}
+
+
+	case 3:
+
+	{
+	
+		int n;
+		double h;
+		double S1 = 0, S2 = 0, y;
+		cout << "Введите колличество шагов: "; cin >> n;
+		
+		h = abs((T - B)) / n;
+
+		T = 0.4;
+		B = 8.56;
+
+		for (int i = 0; i < n; i++)
+		{
+			S1 += (FunctionX(T, T) + FunctionX(T + h, T)) * h * 0.5;
+			S2 += (Function(T) + Function(T + h)) * h * 0.5;
+			T = T + h;
+
+		}
+
+
+		
+
+
+
+		y = S1 / S2;
+
+		cout << "Методом высотной дефазификации получим знанчение: " << y << endl;
+
+		break;
+	}
+
+
+	default:
+		cout << "Такого метода нет" << endl;
+		break;
+	}
+}
