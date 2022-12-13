@@ -4,7 +4,7 @@
 #include <Windows.h>
 using namespace std;
 
-double T = 0, B = 10;
+double L = 0, R = 10;
 int n;
 
 
@@ -17,32 +17,14 @@ double Function(int x) {
 		return 2.5 - (0.25 * x);
 	if (x < 0 && x>10)
 		return 0;
+	
 
 }
 
-double FunctionX(int x, int T) {
+int FunctionX(int x) 
+{
 	return x * Function(x);
 }
-
-
-
-
-double FunctionMed(int x) {
-	if (x >= 0 && x <= 1)
-		return x * x;
-	if (x > 1 && x <= 6)
-		return 1;
-	if (x > 6 && x <= B)
-		return 2, 5 - (0, 25 * x);
-	if (x < 0 && x>10)
-		return 0;
-
-}
-
-
-
-
-
 
 
 
@@ -54,8 +36,9 @@ int main()
 
 	cout << "Выберите методы вычисления интеграла: " << "\n" <<
 		"1. Методом центра тяжести." << "\n" <<
-		"2. Медианным метолом." << "\n" <<
-		"3. Высотным методом." << "\n";
+		"2. Медианным методом." << "\n" <<
+		"3. Высотным методом." << "\n" <<
+		"Для выбора метода введите номер соответсвующий этому методу: ";
 	cin >> metod;
 
 	switch (metod)
@@ -64,11 +47,11 @@ int main()
 	{
 		int n;
 		double h;
-		double S1 = 0, S2 = 0, y;
+		double IntegrBolsh = 0, IntegrMensh = 0, y;
 		cout << "Введите колличество шагов: "; cin >> n;
-		
 
-		h = abs((T - B)) / n;
+
+		h = (R - L) / n;
 
 
 
@@ -76,16 +59,16 @@ int main()
 		{
 
 
-			S1 += (FunctionX(T, T) + FunctionX(T + h, T)) * h * 0.5;
-			S2 += (Function(T) + Function(T + h)) * h * 0.5;
+			IntegrBolsh += (FunctionX(L) + FunctionX(L + h)) * h * 0.5;
+			IntegrMensh += (Function(L) + Function(L + h)) * h * 0.5;
 
 
-			T = T + h;
+			L = L + h;
 		}
 
 
 
-		y = S1 / S2;
+		y = IntegrBolsh / IntegrMensh;
 		cout << "Значаение полученное Методом центра тяжести: " << y << endl;
 
 		break;
@@ -95,33 +78,34 @@ int main()
 	{
 
 		int n;
-		double S1 = 0, S2 = 4;
+		double PloshPoisk = 0, PloshadObsh = 0;
 		double h;
 		cout << "Введите колличество шагов: "; cin >> n;
-		h = abs((T - B)) / n;
-		
+		h = (R - L) / n;
+
 		for (int i = 0; i < n; i++)
 		{
-			
-				S2 += (Function(T) + Function(T + h)) * h * 0.5;
-			
+
+			PloshadObsh += (Function(L) + Function(L + h)) * h * 0.5;
+			L = L + h;
 		}
+		PloshadObsh = PloshadObsh / 2;
 
-		
+		L = 0;
 
-		while (S1 <= S2)
+		while (PloshPoisk <= PloshadObsh)
 		{
 
-			
-				S1 += (Function(T) + Function(T + h)) * h * 0.5;
-			
 
-			T += h;
+			PloshPoisk += (Function(L) + Function(L + h)) * h * 0.5;
+
+
+			L = L+h;
 		}
 
-		
-		
-		cout << "\nРезультат дефаззификации медианным методом: " << T << endl;
+
+
+		cout << "Медианным методом  дефазификации получим знанчение: " << L << endl;
 
 
 		break;
@@ -133,31 +117,31 @@ int main()
 	case 3:
 
 	{
-	
+
 		int n;
 		double h;
-		double S1 = 0, S2 = 0, y;
+		double PloshVerh = 0, PloshNizh = 0, y;
 		cout << "Введите колличество шагов: "; cin >> n;
-		
-		h = abs((T - B)) / n;
 
-		T = 0.4;
-		B = 8.56;
+		h = (R - L) / n;
+
+		L = 0.6;
+		R = 8.56;
 
 		for (int i = 0; i < n; i++)
 		{
-			S1 += (FunctionX(T, T) + FunctionX(T + h, T)) * h * 0.5;
-			S2 += (Function(T) + Function(T + h)) * h * 0.5;
-			T = T + h;
+			PloshVerh += (FunctionX(L) + FunctionX(L + h)) * h * 0.5;
+			PloshNizh += (Function(L) + Function(L + h)) * h * 0.5;
+			L = L + h;
 
 		}
 
 
-		
 
 
 
-		y = S1 / S2;
+
+		y = PloshVerh / PloshNizh;
 
 		cout << "Методом высотной дефазификации получим знанчение: " << y << endl;
 
